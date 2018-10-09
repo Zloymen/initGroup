@@ -1,0 +1,11 @@
+[ {
+  "dateTime" : "2016-01-10T10:30:00",
+  "orderNumber" : 160004,
+  "customerName" : "ООО Ромашка",
+  "items" : [ {
+    "name" : "Дырокол",
+    "price" : 20000,
+    "quantity" : 2,
+    "sum" : 40000
+  } ]
+} ]
