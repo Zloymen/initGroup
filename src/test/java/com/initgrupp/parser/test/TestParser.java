@@ -2,6 +2,7 @@ package com.initgrupp.parser.test;
 
 import com.initgrupp.data.Item;
 import com.initgrupp.data.Order;
+import com.initgrupp.error.BadTLVstructureException;
 import com.initgrupp.error.UnknownTagException;
 import com.initgrupp.parser.ParserTLV;
 import org.apache.commons.lang3.ArrayUtils;
@@ -62,6 +63,13 @@ public class TestParser extends Assert {
 
     @Test(expected = UnknownTagException.class)
     public void testToUnknownTagException() {
+        byte[] badSources = Arrays.copyOf(sources, sources.length);
+        badSources[8] = (byte)0x05;
+        parserTLV.parserOrder(badSources);
+    }
+
+    @Test(expected = BadTLVstructureException.class)
+    public void testToBadTLVstructureException() {
         byte[] badSources = Arrays.copyOf(sources, sources.length);
         badSources[0] = (byte)0x05;
         parserTLV.parserOrder(badSources);

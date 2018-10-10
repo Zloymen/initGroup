@@ -2,6 +2,7 @@ package com.initgrupp.parser;
 
 import com.initgrupp.data.Item;
 import com.initgrupp.data.Order;
+import com.initgrupp.error.BadTLVstructureException;
 import com.initgrupp.error.UnknownTagException;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -30,7 +31,7 @@ public class ParserTLV {
                 order = new Order();
                 orders.add(order);
             }
-
+            if(order == null) throw new BadTLVstructureException();
             fillOrder(order, item);
             i = i + 4 + item.getLength();
         }
@@ -114,12 +115,13 @@ public class ParserTLV {
         order.setItems(items);
         Item item = null;
         int i = 0;
-        while( i < byteValue.length){
+        while(i < byteValue.length){
             TLVItem tlvItem = getTLV(i, byteValue);
             if(tlvItem.getTag() == 11){
                 item = new Item();
                 items.add(item);
             }
+            if(item == null) throw new BadTLVstructureException();
             fillItem(item, tlvItem);
             i = i + 4 + tlvItem.getLength();
         }
